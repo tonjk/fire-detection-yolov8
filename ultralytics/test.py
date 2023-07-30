@@ -3,7 +3,8 @@ from ultralytics.yolo.v8.detect.predict import DetectionPredictor
 
 import cv2
 
-model = YOLO(r'C:\Users\Alpha 15 A3DD\Z-coding\Fire-Detection-using-YOLOv8\best.pt')
+model = YOLO('/Users/tonjk/Desktop/BDA/EGAT/model-fire/fire-detection-yolov8/best.pt')
 
-res = model.predict(r'C:\Users\Alpha 15 A3DD\Z-coding\Fire-Detection-using-YOLOv8\fire.jpg',show=True)
+# res = model.predict('/Users/tonjk/Desktop/BDA/EGAT/model-fire/fire-detection-yolov8/fire.jpg',show=True)
+res = model.predict('/Users/tonjk/Desktop/BDA/EGAT/model-fire/fire-detection-yolov8/ultralytics/yolo/v8/detect/demo.mp4',show=True)
 # print(res)
