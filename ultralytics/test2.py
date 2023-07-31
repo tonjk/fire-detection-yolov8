@@ -3,24 +3,21 @@ from ultralytics import YOLO
 # from ultralytics.yolo.v8.detect.predict import DetectionPredictor
 from ultralytics.models.yolo.detect.predict import DetectionPredictor
 import numpy as np
-
 import cv2
+from time import time
 
-image = True
+image = False
 
 if image:
-    print('hello')
     model = YOLO('/Users/tonjk/Desktop/BDA/EGAT/model-fire/fire-detection-yolov8/best.pt')
     img_path = '/Users/tonjk/Desktop/BDA/EGAT/model-fire/fire-detection-yolov8/fire.jpg'
     # img_path = '/Users/tonjk/Desktop/BDA/EGAT/model-fire/fire-detection-yolov8/ffire.jpeg'
     # img_path = '/Users/tonjk/Desktop/BDA/EGAT/model-fire/fire-detection-yolov8/ultralytics/yolo/v8/detect/demo.mp4'
-    # img = cv2.imread(img_path)
-    # res = model(img)
     res = model.predict(img_path, show=False)
-    print(res)
-    print(type(res))
-    print(model.model.names)
-    print('---------------------------')
+    # print(res)
+    # print(type(res))
+    # print(model.model.names)
+    # print('---------------------------')
     # print(res[-1])
     # print(res[-1].tolist())
     img = cv2.imread(img_path)
@@ -43,8 +40,8 @@ if image:
     cv2.destroyAllWindows()
 
 else:
-    model = YOLO('/Users/tonjk/Desktop/BDA/EGAT/model-fire/fire-detection-yolov8/best.pt')
-    # model = YOLO('./new_model/yolov8s.pt')
+    # model = YOLO('/Users/tonjk/Desktop/BDA/EGAT/model-fire/fire-detection-yolov8/best.pt')
+    model = YOLO('./new_model/fasmv8.pt')
     # cap = cv2.VideoCapture('/Users/tonjk/Desktop/BDA/EGAT/model-fire/fire-detection-yolov8/ultralytics/yolo/v8/detect/demo.mp4')
     cap = cv2.VideoCapture(0)
     # res = model(source=0, stream=True, show=True)
@@ -53,8 +50,10 @@ else:
     while True:
         ret, frame = cap.read()
         assert ret
+        start_time = time()
         # frame = cv2.resize(frame, (640,460))
         res = model.predict(frame, conf=0.25, imgsz=640, show=False, verbose=False)
+        print(f"Frame : {count} \t {np.round(time()-start_time,2)} sec")
         # print(frame.shape)
         draw_img = frame.copy()
         for *xywh, conf, lb in res[0].boxes.data.tolist():
